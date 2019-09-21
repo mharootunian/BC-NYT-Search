@@ -31,35 +31,37 @@ $(document).ready(function () {
             url: qUrl,
             method: "GET"
         }).then(function (response) {
-
+            
             let count = 1;
             for (let i = 0; i < 5; i++) {
                 console.log(response.response.docs[i])
                 let results = $("<div>");
                 results.addClass("card card-body");
 
-                let title = $(`<h5>${count}. ${response.headline.main}</h5>`);
-                results.attr("data-info", response.headline.main)
+                let title = $(`<h5>${count}. ${response.response.docs[i].headline.main}</h5>`);
+                title.text(response.response.docs[i].headline.main);
                 title.addClass("card-title");
                 results.append(title);
 
                 let author = $("<p>");
-                results.attr("data-info", response.byline.original)
+                author.text(response.response.docs[i].byline.original);
                 author.addClass("card-text");
                 results.append(author);
 
                 let section = $("<p>");
-                results.attr("data-info", response.section_name)
+                section.text("Section: " + response.response.docs[i].section_name)
                 section.addClass("card-text");
                 results.append(section);
 
                 let date = $("<p>");
                 date.addClass("card-text");
-                results.attr("data-info", response.pub_date)
+                date.text(response.response.docs[i].pub_date)
                 results.append(date);
 
-                let link = $("<p>");
-                link.addClass("card-text", response.web_url);
+                let link = $("<a>");
+                link.addClass("card-text");
+                link.attr("href",response.response.docs[i].web_url )
+                link.text(response.response.docs[i].web_url);
                 results.append(link);
                 $("#topArticles").append(results);
                 
